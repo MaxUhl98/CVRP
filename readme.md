@@ -4,5 +4,5 @@ Since some files are too large for git you will need to create your own benchmar
 2. installing the requirements via terminal using the command:\
    ```pip install -r requirements.txt```
 3. running main.py via terminal using the command:\ 
-   ```python main.py```\
+   ```python main.py``` \
    or by running main in your IDE
