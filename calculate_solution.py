@@ -8,7 +8,6 @@ from typing import *
 from pathlib import Path
 import time
 from tqdm import tqdm
-import cProfile
 
 
 def move_element(base_list: List[Any], obj_idx: int, new_position: int) -> List[Any]:
@@ -33,7 +32,7 @@ def calculate_route_length(route: List[int]):
     return sum([np.linalg.norm(point - route[num]) for num, point in enumerate(route[1:])])
 
 
-def get_nearest_neighbour_solution(instance: Dict[str, Any], distance_matrix: np.ndarray, instance_name: str):
+def get_nearest_neighbour_solution(instance: Dict[str, Any], distance_matrix: np.ndarray):
     points = [num for num, _ in enumerate(instance['node_coord'])][1:]
     capacity_limit = instance['capacity']
     demands = list(instance['demand'])[1:]
@@ -54,22 +53,18 @@ def get_nearest_neighbour_solution(instance: Dict[str, Any], distance_matrix: np
             else:
                 break
         routes += [current_route]
-    cost = calculate_cost(instance, {'routes': routes})
-    vrplib.write_solution(f'solutions/NearestNeighbour/{instance_name}.sol', routes,
-                          {'cost': cost})
-    return cost
+    return routes
 
 
-def calculate_cost(instance: dict[str, Any], solution: dict[str, Any], rounding: bool = True) -> Union[int, float]:
+def calculate_cost(solution: dict[str, Any], distance_matrix: np.ndarray) -> Union[int, float]:
     cost = 0
-    edges = instance['node_coord']
+    distance_matrix = np.round(distance_matrix)
     for route in solution['routes']:
         last = 0
         for edge in route:
-            cost += round(np.linalg.norm(edges[edge] - edges[last])) if rounding else np.linalg.norm(
-                edges[edge] - edges[last])
+            cost += distance_matrix[last, edge]
             last = edge
-        cost += round(np.linalg.norm(edges[last] - edges[0])) if rounding else np.linalg.norm(edges[last] - edges[0])
+        cost += distance_matrix[last, 0]
     return cost
 
 
@@ -218,7 +213,7 @@ def run_random_insertion_loop(points: List[int],
     return routes  # , route_history
 
 
-def get_insert_solution(instance: Dict[str, Any], distance_matrix: np.ndarray, instance_name: str,
+def get_insert_solution(instance: Dict[str, Any], distance_matrix: np.ndarray,
                         solver_type: str = 'cheapest'
                         ):
     points = [num for num, _ in enumerate(instance['node_coord'])][1:]
@@ -240,19 +235,10 @@ def get_insert_solution(instance: Dict[str, Any], distance_matrix: np.ndarray, i
     else:
         raise ValueError(
             'The solver type you are looking for is not implemented, make sure that solver_type is one out of ["cheapest", "nearest", "farthest", "random"]')
-
-    # with open(f'solutions/Insertion/{solver_type}/{instance_path.rsplit(r"/", 1)[1].split(".")[0]}.txt', 'w',
-    #          encoding='utf-8') as f:
-    #    f.write(str(route_history))
-    cost = calculate_cost(instance, {'routes': routes})
-    vrplib.write_solution(f'solutions/Insertion/{solver_type}/{instance_name}.sol',
-                          routes,
-                          {'cost': cost})
-    return cost
+    return routes
 
 
-def get_savings_solution(instance: Dict[str, Any], distance_matrix: np.ndarray, instance_name: str):
-    route_history = []
+def get_savings_solution(instance: Dict[str, Any], distance_matrix: np.ndarray):
     points = [num for num, _ in enumerate(instance['node_coord'])][1:]
     capacity_limit = instance['capacity']
     demands = {num + 1: demand for num, demand in enumerate(instance['demand'][1:])}
@@ -264,18 +250,17 @@ def get_savings_solution(instance: Dict[str, Any], distance_matrix: np.ndarray, 
     savings = sorted(savings, key=lambda x: x[0], reverse=True)
     for saving in savings:
         if saving[0] <= 0.1: continue
-        route_history += [routes]
-        i, j = saving[1]
+        _i, _j = saving[1]
         try:
-            first_route = list(filter(lambda x: x[0] == i or x[-1] == i, routes))[0]
-            second_route = list(filter(lambda x: x[0] == j or x[-1] == j, routes))[0]
+            first_route = list(filter(lambda x: x[0] == _i or x[-1] == _i, routes))[0]
+            second_route = list(filter(lambda x: x[0] == _j or x[-1] == _j, routes))[0]
         except IndexError:
             continue
         if first_route == second_route or first_route == second_route[::-1]: continue
         if np.sum([demands[num] for num in first_route] + [demands[num] for num in second_route]) <= capacity_limit:
-            if i == first_route[0]:
+            if _i == first_route[0]:
                 first_route = first_route[::-1]
-            if j == second_route[-1]:
+            if _j == second_route[-1]:
                 second_route = second_route[::-1]
 
             routes = list(
@@ -284,15 +269,7 @@ def get_savings_solution(instance: Dict[str, Any], distance_matrix: np.ndarray, 
                 routes.remove(second_route)
             except ValueError:
                 routes.remove(second_route[::-1])
-    route_history += routes
-    with open(f'solutions/Savings/{instance_name}.txt', 'w',
-              encoding='utf-8') as f:
-        f.write(str(route_history))
-    cost = calculate_cost(instance, {'routes': routes})
-    vrplib.write_solution(f'solutions/Savings/{instance_name}.sol',
-                          routes,
-                          {'cost': cost})
-    return cost
+    return routes
 
 
 def sort_by_polar_angle(points):
@@ -304,33 +281,32 @@ def sort_by_polar_angle(points):
     return sorted(points, key=key)
 
 
-def get_sweep_solution(instance: Dict[str, Any], distance_matrix: np.ndarray, instance_name: str):
+def get_sweep_solution(instance: Dict[str, Any], distance_matrix: np.ndarray,
+                       solver_type: str = 'cheapest'):
     depot_location = instance['node_coord'][0]
     points = list(instance['node_coord'])[1:]
     capacity_limit = instance['capacity']
     demands = list(instance['demand'])
-    point_number_map = {tuple(edge): num for num, edge in enumerate(instance['node_coord'])}
-
     angles = sort_by_polar_angle([(point - depot_location, num + 1) for num, point in enumerate(points)])
     routes = []
+    insertion_loop_mapping = {'cheapest': run_cheapest_insertion_loop, 'nearest': run_nearest_insertion_loop,
+                              'farthest': run_farthest_insertion_loop, 'random': run_random_insertion_loop}
+    assert insertion_loop_mapping.get(solver_type), AssertionError(f'Solver does not exist, you gave {solver_type},'
+                                                                   f' but only {list(insertion_loop_mapping.keys())} '
+                                                                   f'are implemented solvers')
     while angles:
 
         route = []
-        while angles and sum([demands[num] for num, _ in enumerate(route)]) + demands[angles[0][1]] <= capacity_limit:
+        while angles and sum([demands[num] for num in route]) + demands[angles[0][1]] <= capacity_limit:
             route += [angles.pop(0)[1]]
         routes += [route]
 
     for num, route in enumerate(routes):
-        route = run_nearest_insertion_loop(points=route,
-                                           capacity_limit=capacity_limit, demands=demands,
-                                           distance_matrix=distance_matrix)
+        route = insertion_loop_mapping[solver_type](points=route,
+                                                    capacity_limit=capacity_limit, demands=demands,
+                                                    distance_matrix=distance_matrix)
         routes[num] = route[0]
-    cost = calculate_cost(instance, {'routes': routes})
-    vrplib.write_solution(f'solutions/Sweep/{instance_name}.sol',
-                          routes,
-                          {'cost': cost})
-
-    return cost
+    return routes
 
 
 def get_relocated_route(route: List[np.ndarray]) -> List[np.ndarray]:
@@ -349,6 +325,13 @@ def get_exchanged_route(route: List[np.ndarray]) -> List[np.ndarray]:
     return swap_positions(route, best_route[1][0], best_route[1][1])
 
 
+def finalize_results(routes: List[List[int]], distance_matrix: np.ndarray, instance_name: str):
+    cost = calculate_cost({'routes': routes}, distance_matrix)
+    vrplib.write_solution(f'solutions/NearestNeighbour/{instance_name}.sol', routes,
+                          {'cost': cost})
+    return cost
+
+
 def benchmark_opening_heuristics(benchmark_folder_path: Union[os.PathLike, str] = r'data/Seminar_Arbeit_Subset'):
     benchmark_info = {'Benchmark': [], 'Algorithmus': [], 'Lösungszeit': [], 'Routenkosten': [],
                       'Relative Differenz zur optimalen Lösung': []}
@@ -362,21 +345,37 @@ def benchmark_opening_heuristics(benchmark_folder_path: Union[os.PathLike, str] 
             benchmark_info['Benchmark'] += [benchmark_name]
             benchmark_info['Algorithmus'] += [f'{solver_type} Insert']
             t_0 = time.perf_counter()
-            cost = get_insert_solution(instance=benchmark, solver_type=solver_type, instance_name=benchmark_name,
-                                       distance_matrix=dist_mat)
+            routes = get_insert_solution(instance=benchmark, solver_type=solver_type,
+                                         distance_matrix=dist_mat)
             t_f = time.perf_counter()
+            cost = finalize_results(routes, instance_name=benchmark_name, distance_matrix=dist_mat)
             benchmark_info['Lösungszeit'] += [t_f - t_0]
             benchmark_info['Routenkosten'] += [cost]
             benchmark_info['Relative Differenz zur optimalen Lösung'] += [
                 f'{100 * (cost - optimal_cost) / optimal_cost:.2f}%']
 
-        for solver, solver_name in zip([get_sweep_solution, get_savings_solution, get_nearest_neighbour_solution],
-                                       ['Sweep', 'Savings', 'Nearest Neighbour']):
+        for solver_type in ['cheapest', 'nearest', 'farthest', 'random']:
+            benchmark_info['Benchmark'] += [benchmark_name]
+            benchmark_info['Algorithmus'] += [f'Sweep + {solver_type} Insert']
+            t_0 = time.perf_counter()
+            routes = get_sweep_solution(instance=benchmark, solver_type=solver_type,
+                                        distance_matrix=dist_mat)
+            t_f = time.perf_counter()
+            cost = finalize_results(routes, instance_name=benchmark_name, distance_matrix=dist_mat)
+
+            benchmark_info['Lösungszeit'] += [t_f - t_0]
+            benchmark_info['Routenkosten'] += [cost]
+            benchmark_info['Relative Differenz zur optimalen Lösung'] += [
+                f'{100 * (cost - optimal_cost) / optimal_cost:.2f}%']
+
+        for solver, solver_name in zip([get_savings_solution, get_nearest_neighbour_solution],
+                                       ['Savings', 'Nearest Neighbour']):
             benchmark_info['Benchmark'] += [benchmark_name]
             benchmark_info['Algorithmus'] += [solver_name]
             t_0 = time.perf_counter()
-            cost = solver(instance=benchmark, distance_matrix=dist_mat, instance_name=benchmark_name)
+            routes = solver(instance=benchmark, distance_matrix=dist_mat)
             t_f = time.perf_counter()
+            cost = finalize_results(routes, instance_name=benchmark_name, distance_matrix=dist_mat)
             benchmark_info['Lösungszeit'] += [t_f - t_0]
             benchmark_info['Routenkosten'] += [cost]
             benchmark_info['Relative Differenz zur optimalen Lösung'] += [
@@ -392,8 +391,3 @@ def get_distance_matrix(points: List[np.ndarray]) -> np.ndarray:
         for j in range(dist_mat.shape[0]):
             dist_mat[i, j] = np.linalg.norm(points[i] - points[j])
     return dist_mat
-
-
-if __name__ == '__main__':
-    benchmark_opening_heuristics()
-#
