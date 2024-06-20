@@ -6,3 +6,6 @@ Since some files are too large for git you will need to create your own benchmar
 3. running main.py via terminal using the command:\
    ```python main.py```\
    or by running main in your IDE
+
+All benchmarks used were downloaded from http://vrp.galgos.inf.puc-rio.br/index.php/en/
+Additional Benchmark Information was Scraped from http://vrp.galgos.inf.puc-rio.br/index.php/en/
