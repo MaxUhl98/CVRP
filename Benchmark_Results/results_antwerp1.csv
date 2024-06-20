@@ -1,0 +1,11 @@
+,Benchmark,Algorithmus,Lösungszeit,Routenkosten,Relative Differenz zur optimalen Lösung
+0,Antwerp1,cheapest Insert,48.32882689998951,540877.0,13.33%
+1,Antwerp1,nearest Insert,78.06232579995412,521784.0,9.33%
+2,Antwerp1,farthest Insert,76.8894883999601,1137170.0,138.26%
+3,Antwerp1,random Insert,0.04005710000637919,2308141.0,383.61%
+4,Antwerp1,Sweep + cheapest Insert,0.13971399993170053,659547.0,38.19%
+5,Antwerp1,Sweep + nearest Insert,0.2764382000314072,657304.0,37.72%
+6,Antwerp1,Sweep + farthest Insert,0.27497639995999634,692959.0,45.19%
+7,Antwerp1,Sweep + random Insert,0.05726260005030781,691799.0,44.95%
+8,Antwerp1,Savings,1251.8971051999833,498916.0,4.53%
+9,Antwerp1,Nearest Neighbour,0.6170742999529466,525458.0,10.09%
