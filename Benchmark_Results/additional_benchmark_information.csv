@@ -1,0 +1,101 @@
+,Benchmark,Maximale Weglänge,Depotposition,Kundenposition
+0,X-n1001-k43,72355,Random,Random
+1,X-n101-k25,27591,Random,Random
+2,X-n106-k14,26362,Corner,Clustered
+3,X-n110-k13,14971,Center,Random
+4,X-n115-k10,12747,Center,Random
+5,X-n120-k6,13332,Corner,Random CLustered
+6,X-n125-k30,55539,Random,Clustered
+7,X-n129-k18,28940,Corner,Random CLustered
+8,X-n134-k13,10916,Random,Clustered
+9,X-n139-k10,13590,Center,Random
+10,X-n143-k7,15700,Corner,Random
+11,X-n148-k46,43448,Random,Random CLustered
+12,X-n153-k22,21220,Center,Clustered
+13,X-n157-k13,16876,Random,Clustered
+14,X-n162-k11,14138,Center,Random CLustered
+15,X-n167-k10,20557,Corner,Random
+16,X-n172-k51,45607,Center,Random CLustered
+17,X-n176-k26,47812,Corner,Random
+18,X-n181-k23,25569,Random,Clustered
+19,X-n186-k15,24145,Random,Random
+20,X-n190-k8,16980,Corner,Clustered
+21,X-n195-k51,44225,Center,Random CLustered
+22,X-n200-k36,58578,Random,Clustered
+23,X-n204-k19,19565,Center,Random CLustered
+24,X-n209-k16,30656,Corner,Random
+25,X-n214-k11,10856,Center,Clustered
+26,X-n219-k73,117595,Corner,Random
+27,X-n223-k34,40437,Random,Random CLustered
+28,X-n228-k23,25742,Random,Clustered
+29,X-n233-k16,19230,Center,Random CLustered
+30,X-n237-k14,27042,Corner,Random
+31,X-n242-k48,82751,Corner,Random
+32,X-n247-k50,37274,Center,Clustered
+33,X-n251-k28,38684,Random,Random CLustered
+34,X-n256-k16,18839,Center,Clustered
+35,X-n261-k13,26558,Corner,Random
+36,X-n266-k58,75478,Random,Random CLustered
+37,X-n270-k35,35291,Center,Random CLustered
+38,X-n275-k28,21245,Random,Clustered
+39,X-n280-k17,33503,Corner,Random
+40,X-n284-k15,20215,Random,Clustered
+41,X-n289-k60,95151,Corner,Random CLustered
+42,X-n294-k50,47161,Center,Random
+43,X-n298-k31,34231,Random,Random
+44,X-n303-k21,21736,Center,Clustered
+45,X-n308-k13,25859,Corner,Random CLustered
+46,X-n313-k71,94043,Random,Random CLustered
+47,X-n317-k53,78355,Corner,Clustered
+48,X-n322-k28,29834,Center,Random
+49,X-n327-k20,27532,Random,Random CLustered
+50,X-n331-k15,31102,Corner,Random
+51,X-n336-k84,139111,Corner,Random
+52,X-n344-k43,42050,Center,Random CLustered
+53,X-n351-k40,25896,Center,Clustered
+54,X-n359-k29,51505,Corner,Random CLustered
+55,X-n367-k17,22814,Random,Clustered
+56,X-n376-k94,147713,Corner,Random
+57,X-n384-k52,65928,Random,Random
+58,X-n393-k38,38260,Center,Random CLustered
+59,X-n401-k29,66154,Corner,Clustered
+60,X-n411-k19,19712,Random,Clustered
+61,X-n420-k130,107798,Center,Random CLustered
+62,X-n429-k61,65449,Random,Random
+63,X-n439-k37,36391,Center,Random CLustered
+64,X-n449-k29,55233,Corner,Random
+65,X-n459-k26,24139,Center,Clustered
+66,X-n469-k138,221824,Corner,Random
+67,X-n480-k70,89449,Random,Clustered
+68,X-n491-k59,66483,Random,Random CLustered
+69,X-n502-k39,69226,Corner,Clustered
+70,X-n513-k21,24201,Center,Random CLustered
+71,X-n524-k153,154593,Random,Random
+72,X-n536-k96,94846,Center,Clustered
+73,X-n548-k50,86700,Corner,Random
+74,X-n561-k42,42717,Center,Random CLustered
+75,X-n573-k30,50673,Corner,Clustered
+76,X-n586-k159,190316,Random,Random CLustered
+77,X-n599-k92,108451,Random,Random
+78,X-n613-k62,59535,Center,Random
+79,X-n627-k43,62164,Corner,Clustered
+80,X-n641-k35,63682,Corner,Random CLustered
+81,X-n655-k131,106780,Center,Clustered
+82,X-n670-k130,146332,Random,Random
+83,X-n685-k75,68205,Center,Random CLustered
+84,X-n701-k44,81923,Corner,Random CLustered
+85,X-n716-k35,43373,Random,Clustered
+86,X-n733-k159,136187,Center,Random
+87,X-n749-k98,77269,Random,Clustered
+88,X-n766-k71,114417,Corner,Random CLustered
+89,X-n783-k48,72386,Random,Random
+90,X-n801-k40,73305,Corner,Random
+91,X-n819-k171,158121,Center,Clustered
+92,X-n837-k142,193737,Random,Random CLustered
+93,X-n856-k95,88965,Center,Random CLustered
+94,X-n876-k59,99299,Corner,Clustered
+95,X-n895-k37,53860,Random,Random
+96,X-n916-k207,329179,Corner,Random CLustered
+97,X-n936-k151,132715,Center,Random
+98,X-n957-k87,85465,Random,Random CLustered
+99,X-n979-k58,118976,Corner,Clustered

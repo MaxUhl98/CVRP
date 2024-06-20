@@ -9,16 +9,16 @@
 7,farthest Insert,Center,Clustered,87.078
 8,nearest Insert,Center,Clustered,19.714
 9,random Insert,Center,Clustered,139.41500000000002
-10,Nearest Neighbour,Center,RC,19.272857142857145
-11,Savings,Center,RC,6.454285714285715
-12,Sweep + cheapest Insert,Center,RC,19.291428571428565
-13,Sweep + farthest Insert,Center,RC,19.365714285714287
-14,Sweep + nearest Insert,Center,RC,15.739285714285716
-15,Sweep + random Insert,Center,RC,18.381428571428568
-16,cheapest Insert,Center,RC,27.159285714285716
-17,farthest Insert,Center,RC,100.60071428571428
-18,nearest Insert,Center,RC,19.36785714285714
-19,random Insert,Center,RC,182.7378571428571
+10,Nearest Neighbour,Center,Random CLustered,19.272857142857145
+11,Savings,Center,Random CLustered,6.454285714285715
+12,Sweep + cheapest Insert,Center,Random CLustered,19.291428571428565
+13,Sweep + farthest Insert,Center,Random CLustered,19.365714285714287
+14,Sweep + nearest Insert,Center,Random CLustered,15.739285714285716
+15,Sweep + random Insert,Center,Random CLustered,18.381428571428568
+16,cheapest Insert,Center,Random CLustered,27.159285714285716
+17,farthest Insert,Center,Random CLustered,100.60071428571428
+18,nearest Insert,Center,Random CLustered,19.36785714285714
+19,random Insert,Center,Random CLustered,182.7378571428571
 20,Nearest Neighbour,Center,Random,21.79875
 21,Savings,Center,Random,5.75375
 22,Sweep + cheapest Insert,Center,Random,22.575
@@ -39,16 +39,16 @@
 37,farthest Insert,Corner,Clustered,25.704444444444448
 38,nearest Insert,Corner,Clustered,9.105555555555556
 39,random Insert,Corner,Clustered,79.79444444444445
-40,Nearest Neighbour,Corner,RC,19.034444444444446
-41,Savings,Corner,RC,5.794444444444445
-42,Sweep + cheapest Insert,Corner,RC,28.08
-43,Sweep + farthest Insert,Corner,RC,30.43
-44,Sweep + nearest Insert,Corner,RC,25.923333333333332
-45,Sweep + random Insert,Corner,RC,29.577777777777776
-46,cheapest Insert,Corner,RC,22.00777777777778
-47,farthest Insert,Corner,RC,40.8
-48,nearest Insert,Corner,RC,17.23
-49,random Insert,Corner,RC,101.49777777777777
+40,Nearest Neighbour,Corner,Random CLustered,19.034444444444446
+41,Savings,Corner,Random CLustered,5.794444444444445
+42,Sweep + cheapest Insert,Corner,Random CLustered,28.08
+43,Sweep + farthest Insert,Corner,Random CLustered,30.43
+44,Sweep + nearest Insert,Corner,Random CLustered,25.923333333333332
+45,Sweep + random Insert,Corner,Random CLustered,29.577777777777776
+46,cheapest Insert,Corner,Random CLustered,22.00777777777778
+47,farthest Insert,Corner,Random CLustered,40.8
+48,nearest Insert,Corner,Random CLustered,17.23
+49,random Insert,Corner,Random CLustered,101.49777777777777
 50,Nearest Neighbour,Corner,Random,17.625625
 51,Savings,Corner,Random,6.52875
 52,Sweep + cheapest Insert,Corner,Random,26.335625
@@ -69,16 +69,16 @@
 67,farthest Insert,Random,Clustered,63.74538461538461
 68,nearest Insert,Random,Clustered,17.553076923076922
 69,random Insert,Random,Clustered,121.59461538461541
-70,Nearest Neighbour,Random,RC,13.365
-71,Savings,Random,RC,4.779999999999999
-72,Sweep + cheapest Insert,Random,RC,27.159000000000002
-73,Sweep + farthest Insert,Random,RC,30.488999999999997
-74,Sweep + nearest Insert,Random,RC,25.895
-75,Sweep + random Insert,Random,RC,29.135999999999996
-76,cheapest Insert,Random,RC,16.768
-77,farthest Insert,Random,RC,76.43499999999999
-78,nearest Insert,Random,RC,12.834
-79,random Insert,Random,RC,117.792
+70,Nearest Neighbour,Random,Random CLustered,13.365
+71,Savings,Random,Random CLustered,4.779999999999999
+72,Sweep + cheapest Insert,Random,Random CLustered,27.159000000000002
+73,Sweep + farthest Insert,Random,Random CLustered,30.488999999999997
+74,Sweep + nearest Insert,Random,Random CLustered,25.895
+75,Sweep + random Insert,Random,Random CLustered,29.135999999999996
+76,cheapest Insert,Random,Random CLustered,16.768
+77,farthest Insert,Random,Random CLustered,76.43499999999999
+78,nearest Insert,Random,Random CLustered,12.834
+79,random Insert,Random,Random CLustered,117.792
 80,Nearest Neighbour,Random,Random,18.87
 81,Savings,Random,Random,6.130000000000001
 82,Sweep + cheapest Insert,Random,Random,24.45363636363636
