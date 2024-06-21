@@ -1,6 +1,5 @@
 import os
 import random
-from itertools import combinations
 import numpy as np
 import pandas as pd
 import vrplib
