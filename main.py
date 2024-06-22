@@ -1,5 +1,5 @@
 from calculate_solution import benchmark_opening_heuristics
-from generate_html_tables import generate_html_tables
+from generate_html_tables import generate_benchmark_html_tables
 from typing import Union
 import os
 
@@ -14,7 +14,7 @@ def main(data_path: Union[str, os.PathLike]):
     """
     result_path = f'Benchmark_Results/results_benchmark_{data_path.rsplit("/", 1)[1]}.csv'
     benchmark_opening_heuristics(data_path)
-    generate_html_tables(result_path)
+    generate_benchmark_html_tables(result_path)
 
 
 if __name__ == '__main__':
