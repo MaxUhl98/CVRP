@@ -84,7 +84,7 @@ def calculate_cost(solution: Dict[str, Any], distance_matrix: np.ndarray) -> Uni
     """
     Calculates the cost of a given solution.
 
-    :param solution: Dictionary containing the solution routes
+    :param solution: Dictionary containing the solution routes  {'routes':[route for route in solution_routes]}
     :param distance_matrix: Matrix containing the distances between points
     :return: Total cost of the solution
     """
@@ -354,25 +354,36 @@ def get_sweep_solution(instance: Dict[str, Any], distance_matrix: np.ndarray,
     capacity_limit = instance['capacity']
     demands = list(instance['demand'])
     angles = sort_by_polar_angle([(point - depot_location, num + 1) for num, point in enumerate(points)])
-    routes = []
+
     insertion_loop_mapping = {'cheapest': run_cheapest_insertion_loop, 'nearest': run_nearest_insertion_loop,
                               'farthest': run_farthest_insertion_loop, 'random': run_random_insertion_loop}
     assert insertion_loop_mapping.get(solver_type), AssertionError(f'Solver does not exist, you gave {solver_type},'
                                                                    f' but only {list(insertion_loop_mapping.keys())} '
                                                                    f'are implemented solvers')
-    while angles:
+    results = {}
+    for start_point, num_route in angles:
+        num_route -= 1
+        copied_angles = angles.copy()
+        copied_angles = copied_angles[num_route:] + copied_angles[:num_route]
+        routes = []
+        copied_demands = demands.copy()
 
-        route = []
-        while angles and sum([demands[num] for num in route]) + demands[angles[0][1]] <= capacity_limit:
-            route += [angles.pop(0)[1]]
-        routes += [route]
+        while copied_angles:
 
-    for num, route in enumerate(routes):
-        route = insertion_loop_mapping[solver_type](points=route,
-                                                    capacity_limit=capacity_limit, demands=demands,
-                                                    distance_matrix=distance_matrix)
-        routes[num] = route[0]
-    return routes
+            route = []
+            while copied_angles and sum([copied_demands[num] for num in route]) + copied_demands[
+                copied_angles[0][1]] <= capacity_limit:
+                route += [copied_angles.pop(0)[1]]
+            routes += [route]
+
+        for num, route in enumerate(routes):
+            route = insertion_loop_mapping[solver_type](points=route,
+                                                        capacity_limit=capacity_limit, demands=copied_demands,
+                                                        distance_matrix=distance_matrix)
+            routes[num] = route[0]
+        results[calculate_cost({'routes': routes}, distance_matrix)] = routes
+
+    return results[min(results)]
 
 
 def get_relocated_route(route: List[np.ndarray]) -> List[np.ndarray]:
