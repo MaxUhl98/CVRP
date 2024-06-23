@@ -8,7 +8,7 @@ from typing import *
 
 def scrape_additional_benchmark_information(benchmark_folder_path: Union[str, os.PathLike] = 'data/X',
                                              additional_information_save_path: Union[
-                                                 str, os.PathLike] = 'additional_benchmark_information.csv'):
+                                                 str, os.PathLike] = 'benchmark_x_additional_information.csv'):
     base_url = 'http://vrp.galgos.inf.puc-rio.br/index.php/en/plotted-instances?data='
     data = {'Benchmark': [], 'Maximale Weglänge': [], 'Depotposition': [], 'Kundenposition': []}
     separator = "</strong>\r\n\t"
