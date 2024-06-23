@@ -8,7 +8,7 @@ def generate_aggregated_table(aggregated_table_save_path: Union[str, os.PathLike
                               benchmark_result_path: Union[
                                   str, os.PathLike] = 'Benchmark_Results/results_benchmark_X.csv',
                               additional_benchmark_information_path: Union[
-                                  str, os.PathLike] = 'additional_benchmark_information.csv'):
+                                  str, os.PathLike] = 'benchmark_x_additional_information.csv'):
     """Uses the specified data to generate an aggregated result table for a given benchmark,
     the name of the benchmark has to be present in the column 'Benchmark',
     the depot position type column has to be named 'Depotposition',
